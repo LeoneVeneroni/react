@@ -1,2 +1,2 @@
 # react
-Códigos baseados do curso Hora de Codar no Youtube
+Códigos baseados naqueles apresentados no curso Hora de Codar no Youtube
