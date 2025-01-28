@@ -5,14 +5,17 @@ import { useState, useEffect } from 'react';
 import Message from '../layout/Message';
 import Container from '../layout/Container';
 import LinkButton from '../layout/LinkButton';
+import Loading from '../layout/Loading';
 
-import styles from './Project.module.css';
+import styles from './Projects.module.css';
 
 import ProjectCard from '../project/ProjectCard';
 
 function Projects() {
 
   const [projects, setProjects] = useState([]);
+  const [removeLoading, setRemoveLoading] = useState(false);
+  const [projectMessage, setProjectMessage] = useState('');
 
   const location = useLocation();
   let message = '';
@@ -21,18 +24,38 @@ function Projects() {
   }
 
   useEffect(() => {
-    fetch('http://localhost:5000/projects', {
-      method: 'GET',
-      Headers: {
-        'Content-Type': 'application/json',
-      },
-    }).then(resp => resp.json())
-      .then((data) => {
-        console.log(data)
-        setProjects(data)
-      })
-      .catch((err) => console.log(err))
+    setTimeout(() => {
+      fetch('http://localhost:5000/projects', {
+        method: 'GET',
+        Headers: {
+          'Content-Type': 'application/json',
+        },
+      }).then(resp => resp.json())
+        .then((data) => {
+          console.log(data)
+          setProjects(data)
+          setRemoveLoading(true) // depois de carregar os projetos
+        })
+        .catch((err) => console.log(err))
+    }, 300)
   }, [])
+
+  function removeProject(id) {
+
+    fetch(`http://localhost:5000/projects/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(resp => resp.json())
+      .then(() => {
+        // O método filter retorna um novo array com os items que foram verdadeiros (true) para uma determinada condição. No caso o código diz que deve ser retornado tudo o que tiver id DIFERENTE do id passado (project.id), ou seja, tudo que NÃO for igual retorna, se for, não retorna.
+        setProjects(projects.filter((project) => project.id !== id))
+        setProjectMessage('Projeto removido com sucesso!')
+      })
+      .catch(err => console.log(err))
+  }
 
   return (
     <div className={styles.project_container}>
@@ -40,7 +63,9 @@ function Projects() {
         <h1>Novos Projetos</h1>
         <LinkButton to="/newproject" text="Criar Projeto" />
       </div>
+
       {message && <Message type="success" msg={message} />}
+      {projectMessage && <Message type="success" msg={projectMessage} />}
 
       <Container customClass="start">
         {/* projects.length > 0 - checa se tem projetos */}
@@ -52,8 +77,13 @@ function Projects() {
               budget={project.budget}
               category={project.category.name}
               key={project.id}
+              handleRemove={removeProject}
             />
           ))}
+        {!removeLoading && <Loading />}
+        {removeLoading && projects.length === 0 && (
+          <p>Não há projetos cadastrados.</p>
+        )}
       </Container>
     </div>
   )

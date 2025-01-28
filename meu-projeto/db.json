@@ -1,48 +1,39 @@
 {
   "projects": [
     {
-      "name": "Leone",
-      "budget": "13",
+      "name": "Computador",
+      "budget": "3200",
       "category": {
-        "id": "2",
+        "id": "4",
+        "name": "Planejamento"
+      },
+      "cost": 120,
+      "services": [
+        {
+          "name": "PC do milhão",
+          "cost": "20",
+          "description": "Compra de uma computador barato",
+          "id": "0138b52e-213d-4a2a-9c64-b66086e6fe71"
+        },
+        {
+          "name": "Técnico",
+          "cost": "100",
+          "description": "Consertar a ventoinha",
+          "id": "05815bfd-2002-4d48-85d4-45dc4fdc96cf"
+        }
+      ],
+      "id": 1
+    },
+    {
+      "name": "Site do pobre",
+      "budget": "1200",
+      "category": {
+        "id": "1",
         "name": "Infra"
       },
       "cost": 0,
       "services": [],
-      "id": 4
-    },
-    {
-      "name": "Santana",
-      "budget": "10",
-      "category": {
-        "id": "4",
-        "name": "Planejamento"
-      },
-      "cost": 0,
-      "services": [],
-      "id": 7
-    },
-    {
-      "name": "José",
-      "budget": "45.54",
-      "category": {
-        "id": "3",
-        "name": "Design"
-      },
-      "cost": 0,
-      "services": [],
-      "id": 12
-    },
-    {
-      "name": "Carro novo",
-      "budget": "500.25",
-      "category": {
-        "id": "4",
-        "name": "Planejamento"
-      },
-      "cost": 0,
-      "services": [],
-      "id": 13
+      "id": 2
     }
   ],
   "categories": [
